@@ -1,0 +1,39 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "arjuna-gym",
+          "appId": "1:404781552195:android:5b84bab0c82367b91dbaf6",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "arjuna-gym",
+          "configurations": {
+            "android": "1:404781552195:android:5b84bab0c82367b91dbaf6",
+            "ios": "1:404781552195:ios:22aaddcba01cdfa61dbaf6",
+            "macos": "1:404781552195:ios:22aaddcba01cdfa61dbaf6",
+            "web": "1:404781552195:web:c8f47647e6562e471dbaf6",
+            "windows": "1:404781552195:web:0dd0ecb7a9b6a1a31dbaf6"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
