@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:attendance_gym/SuccessScreen.dart';
+import 'package:attendance_gym/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -19,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? displayName;
   String timeText = "";
   String dateText = "";
+  bool _isLoading = false;
 
   void getCurrentLiveTime() {
     final DateTime dateTimeNow = DateTime.now();
@@ -139,6 +141,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                (_isLoading)?ElevatedButton(
+                  style:
+                  ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  onPressed: (){},
+                  child: Loading()
+                ):
                 ElevatedButton(
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.green),
@@ -249,6 +257,9 @@ class _HomeScreenState extends State<HomeScreen> {
     date = DateFormat("dd MMMM, yyyy").format(DateTime.now());
     String name = _nameController.text;
     if (name.isNotEmpty) {
+      setState(() {
+        _isLoading = true;
+      });
       await FirebaseFirestore.instance
           .collection("Users")
           .doc('tZmrdkgweQOLpUAvDBm1GDqHPBA2')
@@ -257,9 +268,13 @@ class _HomeScreenState extends State<HomeScreen> {
       _nameController.clear();
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => SuccessScreen()));
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text('Checked in successfully!')),
-      // );
+      setState(() {
+        _isLoading = false;
+      });
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter Name',style: TextStyle(color: Colors.white),),backgroundColor: Colors.red,),
+      );
     }
   }
 }
